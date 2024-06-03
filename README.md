@@ -1,70 +1,193 @@
-# Getting Started with Create React App
+# Bidding Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the frontend of web application bidding system where users can register, create items for auction, place bids on items, and view notifications.
+It is made in React.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Bidding Frontend](#bidding-frontend)
+  - [Table of Contents](#table-of-contents)
+  - [Functionalities](#functionalities)
+  - [Routes](#routes)
+    - [Public Routes](#public-routes)
+    - [Protected Routes](#protected-routes)
+  - [Project Structure](#project-structure)
+  - [Server URLs](#server-urls)
+  - [How to Use the Project](#how-to-use-the-project)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+    - [Usage](#usage)
 
-### `npm start`
+## Functionalities
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. **User Authentication**
+   - Register new users
+   - Login existing users
+2. **Item Management**
+   - Create new items for auction
+   - View list of items
+   - View individual item details
+3. **Bidding**
+   - Place bids on items
+   - View bidding history
+4. **User Profile**
+   - View and edit user profile
+5. **Notifications**
+   - View notifications related to bids and items
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Routes
 
-### `npm test`
+### Public Routes
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **/register**
+   - **Description**: User registration page.
+   - **Component**: `register.js`
+   - **Styles**: `Register.css`
 
-### `npm run build`
+2. **/login**
+   - **Description**: User login page.
+   - **Component**: `login.js`
+   - **Styles**: `Login.css`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. **/items**
+   - **Description**: List of all items available for bidding.
+   - **Component**: `items.js`
+   - **Styles**: `Items.css`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+4. **/item/:id**
+   - **Description**: Detailed view of a specific item.
+   - **Component**: `item.js`
+   - **Styles**: `Item.css`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Protected Routes
 
-### `npm run eject`
+1. **/profile**
+   - **Description**: User profile page.
+   - **Component**: `profile.js`
+   - **Styles**: `Profile.css`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. **/create-item**
+   - **Description**: Page to create a new item for auction.
+   - **Component**: `create_item.js`
+   - **Styles**: `CreateItem.css`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. **/bidding/:id**
+   - **Description**: Page to place bids on a specific item.
+   - **Component**: `bidding.js`
+   - **Styles**: `Bidding.css`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. **/notifications**
+   - **Description**: Notifications related to user activities.
+   - **Component**: `notfications.js`
+   - **Styles**: `Notify.css`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Project Structure
 
-## Learn More
+```
+bidding_frontend/
+├── public/
+│ ├── favicon.ico
+│ ├── index.html
+│ ├── logo192.png
+│ ├── logo512.png
+│ ├── manifest.json
+│ ├── robots.txt
+│ └── uploads/
+│ └── pxfuel.jpg
+├── src/
+│ ├── hooks/
+│ │ └── useFetch.js
+│ ├── pages/
+│ │ ├── bidding.js
+│ │ ├── create_item.js
+│ │ ├── item.js
+│ │ ├── items.js
+│ │ ├── login.js
+│ │ ├── notfications.js
+│ │ ├── profile.js
+│ │ └── register.js
+│ ├── store/
+│ │ ├── authSlice.js
+│ │ └── index.js
+│ ├── styles/
+│ │ ├── Bidding.css
+│ │ ├── CreateItem.css
+│ │ ├── Item.css
+│ │ ├── Items.css
+│ │ ├── Login.css
+│ │ ├── Notify.css
+│ │ ├── Profile.css
+│ │ └── Register.css
+│ ├── App.css
+│ ├── App.js
+│ ├── index.js
+├── .gitignore
+├── package.json
+├── package-lock.json
+└── README.md
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Server URLs
 
-### Code Splitting
+- **Authentication**
+  - Register: `POST /api/auth/register`
+  - Login: `POST /api/auth/login`
+  
+- **Items**
+  - Create Item: `POST /api/items`
+  - Get All Items: `GET /api/items`
+  - Get Item by ID: `GET /api/items/:id`
+  
+- **Bidding**
+  - Place Bid: `POST /api/bids`
+  - Get Bids for Item: `GET /api/items/:id/bids`
+  
+- **Notifications**
+  - Get Notifications: `GET /api/notifications`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## How to Use the Project
 
-### Analyzing the Bundle Size
+### Prerequisites
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Node.js installed
+- npm (Node Package Manager) installed
 
-### Making a Progressive Web App
+### Installation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. Clone the repository:
+    ```sh
+    git clone <repository-url>
+    cd <repository-directory>
+    ```
 
-### Advanced Configuration
+2. Install dependencies:
+    ```sh
+    npm install
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+3. Run the project:
+    ```sh
+    npm start
+    ```
 
-### Deployment
+4. Open your browser and navigate to `http://localhost:3000`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Usage
 
-### `npm run build` fails to minify
+1. **Register and Login**
+   - Navigate to `/register` to create a new account.
+   - Navigate to `/login` to log into your account.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+2. **Create Item**
+   - After logging in, navigate to `/create-item` to create a new auction item.
+
+3. **View and Bid on Items**
+   - Navigate to `/items` to view all available items.
+   - Click on any item to view details and place bids.
+
+4. **User Profile**
+   - Navigate to `/profile` to view and edit your profile information.
+
+5. **Notifications**
+   - Navigate to `/notifications` to view your notifications.

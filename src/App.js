@@ -12,6 +12,8 @@ import CreateItem from './pages/create_item.js';
 import Item from './pages/item.js';
 import Bidding from './pages/bidding.js';
 import Notify from './pages/notfications.js';
+import Navbar from './components/Navbar.js';
+import Home from './pages/Homepage.js';
 
 function App() {
   return (
@@ -20,7 +22,9 @@ function App() {
       <PersistGate persistor={persistor} loading={null}>
       <div className="App">
           <BrowserRouter>
+              <Navbar/>
               <Routes>
+                <Route path="/" element={<Home/>}/> 
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/profile" element={<Profile/>}/>

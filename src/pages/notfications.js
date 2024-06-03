@@ -45,7 +45,7 @@ const Notify = () => {
 
     const handleMarkRead = async (id) => {
         try {
-            const response = await axios.post(`http://localhost:8000/notifications/mark-read`, {}, {
+            const response = await axios.post(`http://localhost:8000/notifications/mark-read/${id}`, {}, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

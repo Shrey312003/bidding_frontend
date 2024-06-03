@@ -100,9 +100,10 @@ const Bidding = () => {
         return () => newSocket.close();
     }, []);
 
+
     return (
         <div>
-            <Button variant="contained" color="primary" onClick={handleOpen}>
+            <Button disabled={token === null || token === undefined} variant="contained" color="primary" onClick={handleOpen}>
                 Place a Bid
             </Button>
             <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">

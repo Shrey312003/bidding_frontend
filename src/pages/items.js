@@ -7,19 +7,22 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router';
 import '../styles/Items.css';
 
 const Items = () => {
     const [page, setPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
+    const [statusFilter, setStatusFilter] = useState("all");
     const limit = 10;
     const navigate = useNavigate();
 
-    const url = `http://localhost:8000/items?page=${page}&limit=${limit}`;
+    const url = `http://localhost:8000/items?page=${page}&limit=${limit}&search=${searchQuery}&status=${statusFilter}`;
     const { data, loading, error } = useFetch(url);
 
-    const [data1, setData1] = useState(null);
+    const [data1, setData1] = useState([]);
 
     useEffect(() => {
         if (data) {
@@ -44,11 +47,27 @@ const Items = () => {
 
     const handleSearch = (e) => {
         setSearchQuery(e.target.value);
+        setPage(1);  // Reset to page 1 when search query changes
     };
 
-    const filteredItems = data1?.filter(item =>
-        item.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const handleStatusFilterChange = (e) => {
+        setStatusFilter(e.target.value);
+        setPage(1);  // Reset to page 1 when status filter changes
+    };
+
+    const filteredItems = data1.filter(item => {
+        const matchesSearchQuery = item.name.toLowerCase().includes(searchQuery.toLowerCase());
+        const isActive = new Date() < new Date(item.end_time);
+        if (statusFilter === "active") {
+            return matchesSearchQuery && isActive;
+        } else if (statusFilter === "ended") {
+            return matchesSearchQuery && !isActive;
+        } else {
+            return matchesSearchQuery;
+        }
+    });
+
+    const isNextButtonDisabled = data1.length < limit;
 
     return (
         <div className="items-wrapper">
@@ -59,6 +78,15 @@ const Items = () => {
                 onChange={handleSearch}
                 className="search-bar"
             />
+            <Select
+                value={statusFilter}
+                onChange={handleStatusFilterChange}
+                className="status-filter"
+            >
+                <MenuItem value="all">All</MenuItem>
+                <MenuItem value="active">Active</MenuItem>
+                <MenuItem value="ended">Ended</MenuItem>
+            </Select>
             {loading && <p>Loading...</p>}
             {error && <p>Error: {error.message}</p>}
             <div className="items-container">
@@ -93,7 +121,7 @@ const Items = () => {
                 <Button variant="contained" onClick={handlePreviousPage} disabled={page === 1}>
                     Previous
                 </Button>
-                <Button variant="contained" onClick={handleNextPage}>
+                <Button variant="contained" onClick={handleNextPage} disabled={isNextButtonDisabled}>
                     Next
                 </Button>
             </div>
